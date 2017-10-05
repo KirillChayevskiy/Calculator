@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Calculator</string>
+    <string name="button_0" translatable="false">0</string>
+    <string name="button_Comma" translatable="false">.</string>
+    <string name="button_Equality" translatable="false">=</string>
+    <string name="button_PlusMinus" translatable="false">±</string>
+    <string name="button_1" translatable="false">1</string>
+    <string name="button_2" translatable="false">2</string>
+    <string name="button_3" translatable="false">3</string>
+    <string name="button_4" translatable="false">4</string>
+    <string name="button_5" translatable="false">5</string>
+    <string name="button_6" translatable="false">6</string>
+    <string name="button_7" translatable="false">7</string>
+    <string name="button_8" translatable="false">8</string>
+    <string name="button_9" translatable="false">9</string>
+    <string name="button_Plus" translatable="false">+</string>
+    <string name="button_Minus" translatable="false">-</string>
+    <string name="button_Multiply" translatable="false">×</string>
+    <string name="button_Clear" translatable="false">C</string>
+    <string name="button_Devide" translatable="false">÷</string>
+    <string name="button_Denominator" translatable="false">¹/ₓ</string>
+    <string name="button_Percent" translatable="false">%</string>
+    <string name="button_Radical" translatable="false">√</string>
+    <string name="button_Power" translatable="false">xʸ</string>
+    <string name="button_Bkt1" translatable="false">(</string>
+    <string name="button_Bkt2" translatable="false">)</string>
+    <string name="button_Sin" translatable="false">sin</string>
+    <string name="button_Cos" translatable="false">cos</string>
+    <string name="button_Tan" translatable="false">tan</string>
+    <string name="button_Log" translatable="false">log</string>
+    <string name="button_Ln" translatable="false">ln</string>
+    <string name="button_Pi" translatable="false">π</string>
+    <string name="button_e" translatable="false">e</string>
+    <string name="error">ERROR</string>
+    <string name="toast_Limit">Достигнут предел функций</string>
+    <string name="toast_BigNumber">Внимание! При работе с большими числами высока вероятность большой погрешности.</string>
+    <string name="toast_RoundingNumber">Число округлено</string>
+</resources>
