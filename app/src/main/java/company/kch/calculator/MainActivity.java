@@ -316,6 +316,7 @@ public class MainActivity extends AppCompatActivity {
                         textView.setText("");
                     }
                     buttonAClicked = false;
+                    result = true;
                 }
             }
         };
