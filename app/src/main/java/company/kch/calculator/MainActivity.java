@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     boolean result = false;
     boolean preNum = false;
     boolean negativeNum = false;
-    boolean bktOpen = false;
     boolean power = false;
     String positiveString;
     int funcCounter = 0;
@@ -174,7 +173,6 @@ public class MainActivity extends AppCompatActivity {
 
                 textView2.setText(textView2.getText() + "(");
                 buttonAClicked = false;
-                bktOpen = true;
 
             }
         };
@@ -189,7 +187,6 @@ public class MainActivity extends AppCompatActivity {
                 if (!result) {
                     textView2.setText(textView2.getText() + "" + textView.getText() + ")");
                     textView.setText("");
-                    bktOpen = false;
                     buttonAClicked = false;
                 }
 
@@ -574,4 +571,33 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 100L);
     }
+
+    //Восстановление Activity после поворота экрана
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        textView.setText(savedInstanceState.getString("textView"));
+        textView2.setText(savedInstanceState.getString("textView2"));
+        positiveString = savedInstanceState.getString("positiveString");
+        buttonAClicked = savedInstanceState.getBoolean("buttonAClicked");
+        result = savedInstanceState.getBoolean("result");
+        preNum = savedInstanceState.getBoolean("preNum");
+        negativeNum = savedInstanceState.getBoolean("negativeNum");
+        power = savedInstanceState.getBoolean("power");
+        funcCounter = savedInstanceState.getInt("funcCounter");
+    }
+
+    //Сохранение Activity при повороте экрана
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("textView", textView.getText().toString());
+        outState.putString("textView2", textView2.getText().toString());
+        outState.putString("positiveString", positiveString);
+        outState.putBoolean("buttonAClicked", buttonAClicked);
+        outState.putBoolean("result", result);
+        outState.putBoolean("preNum", preNum);
+        outState.putBoolean("negativeNum", negativeNum);
+        outState.putBoolean("power", power);
+        outState.putInt("funcCounter", funcCounter);
+    }
+
 }
