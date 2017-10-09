@@ -317,7 +317,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-
         buttonPercent.getId();
         buttonPercent.setOnClickListener(onClickPercent);
 
@@ -389,7 +388,6 @@ public class MainActivity extends AppCompatActivity {
 
     //Функциональные кнопки калькулятора
     public void clickButtonF (final Button button, final String string) {
-
         OnClickListener onClickFunction = new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -599,5 +597,4 @@ public class MainActivity extends AppCompatActivity {
         outState.putBoolean("power", power);
         outState.putInt("funcCounter", funcCounter);
     }
-
 }
