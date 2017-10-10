@@ -403,6 +403,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     showToast(getString(R.string.toast_Limit));
                 }
+                result = true;
             }
         };
         button.getId();
@@ -597,4 +598,11 @@ public class MainActivity extends AppCompatActivity {
         outState.putBoolean("power", power);
         outState.putInt("funcCounter", funcCounter);
     }
+
+
+
+
+
+
+
 }

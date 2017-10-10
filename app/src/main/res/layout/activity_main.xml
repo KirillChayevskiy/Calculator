@@ -83,7 +83,7 @@
         app:layout_constraintRight_toLeftOf="@+id/button2"
         app:layout_constraintTop_toBottomOf="@+id/button4"
         app:layout_constraintVertical_weight="1"
-        android:onClick="onClickButtonNumber"/>
+        android:onClick="onClickButtonNumber" />
 
     <Button
         android:id="@+id/button2"
