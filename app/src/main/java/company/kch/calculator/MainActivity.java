@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import company.kch.calculator.parser.MatchParser;
+import company.kch.calculator.parser.MathParser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    MatchParser parser = new MatchParser();
+    MathParser parser = new MathParser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +83,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (textView.getText().toString().contains("E") || textView.getText().toString().contains(getString(R.string.error))) {
                     deleteResult();
-                } else {
+                } else  if (textView.getText().length() != 0){
                     deleteSymbol(textView);
                     if (result) {
                         result = false;
                         textView2.setText("");
                     }
+                } else if (textView2.getText().length() > 0){
+                    deleteFromTopView();
                 }
             }
         };
@@ -188,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
                     textView2.setText(textView2.getText() + "" + textView.getText() + ")");
                     textView.setText("");
                     buttonAClicked = false;
+                    power = false;
                 }
 
 
@@ -224,6 +227,9 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                         textView2.setText(correctString(textView2.getText().toString()));
+                        if (checkLast(getString(R.string.button_Plus)) || checkLast(getString(R.string.button_Minus)) || checkLast(getString(R.string.button_Multiply)) || checkLast(getString(R.string.button_Devide))) {
+                            textView2.setText(textView2.getText().toString().substring(0,  textView2.getText().length() - 1));
+                        }
                         textView.setText("" + parser.Parse(textView2.getText().toString(), 10));
                     } catch (Exception e) {
                         textView.setText(getString(R.string.error));
@@ -280,11 +286,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (textView.getText().length() != 0) {
-                    MatchParser parserPercent = new MatchParser();
+                    MathParser parserPercent = new MathParser();
                     try {
                         StringBuilder stringBuffer = new StringBuilder(textView2.getText().toString());
                         stringBuffer.delete(textView2.getText().length() - 1, textView2.getText().length());
-                        textView.setText("" + parserPercent.Parse(correctString("(" + stringBuffer.toString() + ")×0.01×" + textView.getText()), 10));
+                        textView.setText("" + parserPercent.Parse(correctString(stringBuffer.toString() + "×0.01×" + textView.getText()), 10));
                         clearValue();
                         if (textView.getText().length() > 13) {
                             int count = 0;
@@ -356,7 +362,8 @@ public class MainActivity extends AppCompatActivity {
         OnClickListener onClickPower = new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (textView.getText().length() != 0 && !textView.getText().equals("-")) {
+                clearValue();
+                if (textView2.getText().length() != 0 || textView.getText().length() != 0) {
                     if (buttonAClicked) {
                         deleteSymbol(textView2);
                         textView2.setText(textView2.getText() + "^(");
@@ -364,20 +371,18 @@ public class MainActivity extends AppCompatActivity {
                         buttonAClicked = false;
                     } else if (textView.getText().toString().contains(getString(R.string.error))) {
                         deleteResult();
-                    } else if (result && !buttonAClicked) {
+                    } else if (result) {
                         textView2.setText(textView2.getText() + "^(");
                         funcCounter = 0;
                         result = false;
                         preNum = true;
                     } else {
-                        clearValue();
                         textView2.setText(textView2.getText() + "" + textView.getText() + "^(");
                         preNum = true;
                         power = true;
                     }
                     buttonPercent.setEnabled(true);
-                    buttonBkt1.setEnabled(true);
-                    buttonBkt2.setEnabled(true);
+                    textView.setText("");
                     scroller(horizontalScrollView2);
                 }
             }
@@ -403,7 +408,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     showToast(getString(R.string.toast_Limit));
                 }
-                result = true;
+
             }
         };
         button.getId();
@@ -416,6 +421,40 @@ public class MainActivity extends AppCompatActivity {
         if (stringBuffer.length() != 0) {
             stringBuffer.delete(tV.getText().length() - 1, tV.getText().length());
             tV.setText(stringBuffer.toString());
+
+        }
+    }
+
+    //Удаление из верхнего поля
+    public void deleteFromTopView() {
+        if (textView2.getText().length() != 0) {
+            if (checkLast("(")){
+                deleteSymbol(textView2);
+                if (checkLast("g") || checkLast("s")) {
+                    for (int i = 0; i < 3; i++){
+                        deleteSymbol(textView2);
+                    }
+                } else if (checkLast("n")) {
+                    deleteSymbol(textView2);
+                    if (checkLast("l")) {
+                        deleteSymbol(textView2);
+                    } else {
+                        deleteSymbol(textView2);
+                        deleteSymbol(textView2);
+                    }
+                } else if (checkLast("t")) {
+                    for (int i = 0; i < 4; i++){
+                        deleteSymbol(textView2);
+                    }
+                } else {
+                    deleteSymbol(textView2);
+                }
+            } else {
+                deleteSymbol(textView2);
+            }
+            if (checkLast(".")) {
+                deleteSymbol(textView2);
+            }
 
         }
     }
@@ -452,10 +491,22 @@ public class MainActivity extends AppCompatActivity {
 
     //Исправление строки
     public String correctString (String string){
-        string = string.replace(")(", ")×(");
-        string = string.replace("()", "(0)");
+
         string = string.replace("--", "+");
         string = string.replace("+-", "-");
+
+        string = string.replace("(+", "(");
+        string = string.replace("(×", "(");
+        string = string.replace("(÷", "(");
+
+        string = string.replace("+)", ")");
+        string = string.replace("-)", ")");
+        string = string.replace("×)", ")");
+        string = string.replace("÷)", ")");
+
+        string = string.replace("()", "(0)");
+        string = string.replace(")(", ")×(");
+
         String[] func = {"c", "s", "t", "l"};
         for (int i = 0; i <10; i++){
             string = string.replace(i + "(", i + "×(" );
@@ -479,8 +530,6 @@ public class MainActivity extends AppCompatActivity {
             preNum = false;
             power = false;
             negativeNum = false;
-            buttonBkt1.setEnabled(true);
-            buttonBkt2.setEnabled(true);
             funcCounter = 0;
             buttonPercent.setEnabled(true);
     }
@@ -488,11 +537,7 @@ public class MainActivity extends AppCompatActivity {
     //Кнопки 0..9
     public void onClickButtonNumber(View view) {
         if (result) {
-            textView.setText("");
-            textView2.setText("");
-            funcCounter = 0;
-            result = false;
-            buttonPercent.setEnabled(true);
+            deleteResult();
         }
         if (preNum) {
             textView.setText("");
@@ -507,6 +552,7 @@ public class MainActivity extends AppCompatActivity {
             buttonAClicked = false;
         }
         scroller(horizontalScrollView);
+        power = false;
     }
 
     //Кнопки +, -, *, /
@@ -517,21 +563,18 @@ public class MainActivity extends AppCompatActivity {
             if (textView.getText().toString().contains(getString(R.string.error))) {
                 deleteResult();
             } else if (textView2.getText().length() != 0) {
-                if (buttonAClicked && textView2.getText().length() >= 2 && (textView2.getText().toString().substring(textView2.getText().length() - 1, textView2.getText().length()).equals("+") ||
-                        textView2.getText().toString().substring(textView2.getText().length() - 1, textView2.getText().length()).equals("-") ||
-                        textView2.getText().toString().substring(textView2.getText().length() - 1, textView2.getText().length()).equals("×") ||
-                        textView2.getText().toString().substring(textView2.getText().length() - 1, textView2.getText().length()).equals("÷") ||
-                        textView2.getText().toString().substring(textView2.getText().length() - 2, textView2.getText().length() ).equals("^("))) {
-                    if (power) {
-                        deleteSymbol(textView2);
-                        power = false;
-                    }
+                if (power && textView.getText().length() == 0) {
+                    deleteSymbol(textView2);
+                    deleteSymbol(textView2);
+                    power = false;
+                }
+                if (buttonAClicked && textView2.getText().length() >= 1 && (checkLast(getString(R.string.button_Plus)) || checkLast(getString(R.string.button_Minus)) || checkLast(getString(R.string.button_Multiply)) || checkLast(getString(R.string.button_Devide)))) {
                     deleteSymbol(textView2);
                     textView2.setText(textView2.getText() + "" + string);
+                    textView.setText("");
                     preNum = true;
                 } else if (result) {
                     textView2.setText(textView2.getText() + "" + string);
-                    textView.setText("");
                     result = false;
                     preNum = true;
                     funcCounter = 0;
@@ -539,6 +582,9 @@ public class MainActivity extends AppCompatActivity {
                     for (int i = 0; i <10; i++) {
                         if (textView2.getText().toString().substring(textView2.getText().length() - 1, textView2.getText().length()).equals(i + "")) {
                             textView2.setText(textView2.getText() + string);
+                            buttonPercent.setEnabled(true);
+                            scroller(horizontalScrollView2);
+                            return;
                         }
                     }
                     if (textView.getText().length() != 0) {
@@ -554,11 +600,8 @@ public class MainActivity extends AppCompatActivity {
             }
             buttonPercent.setEnabled(true);
             buttonAClicked = true;
-            buttonBkt1.setEnabled(true);
-            buttonBkt2.setEnabled(true);
             scroller(horizontalScrollView2);
         }
-
     }
 
     //Скрол в конец строки
@@ -599,10 +642,11 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt("funcCounter", funcCounter);
     }
 
-
-
-
-
-
-
+    //Проверка последнего символа
+    public boolean checkLast (String symbol) {
+        int l = textView2.getText().length();
+        if (textView2.getText().length() != 0) {
+            return textView2.getText().toString().substring(l - 1, l).equals(symbol);
+        } else return false;
+    }
 }

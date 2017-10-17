@@ -7,11 +7,11 @@ import java.util.HashMap;
  * Created by Kirill on 21.09.17.
  */
 
-public class MatchParser {
+public class MathParser {
 
     private HashMap<String, Double> variables;
 
-    public MatchParser()
+    public MathParser()
     {
         variables = new HashMap<String, Double>();
     }

@@ -4,4 +4,13 @@
     <color name="colorPrimaryDark">#607d8b</color>
     <color name="colorAccent">#cfd8dc</color>
     <color name="background_material_light">#CFD8DC</color>
+    <color name="colorLLLL">#cfd8dc</color>
+    <color name="colorLLL">#b0bec5</color>
+    <color name="colorLL">#90a4ae</color>
+    <color name="colorL">#78909c</color>
+    <color name="color">#607d8b</color>
+    <color name="colorD">#546e7a</color>
+    <color name="colorDD">#455a64</color>
+    <color name="colorDDD">#37474f</color>
+    <color name="colorDDDD">#263238</color>
 </resources>
