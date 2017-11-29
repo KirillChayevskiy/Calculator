@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
         clickButtonF(buttonRadical, "sqrt");
         clickButtonF(buttonDenominator, "1÷");
 
-        //Кнопка удаления последнего символа
         OnClickListener onClickDelete = new OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
@@ -98,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
         buttonDelete.getId();
         buttonDelete.setOnClickListener(onClickDelete);
 
-        //Кнопка удаления последнего символа, если долго нажата
         View.OnLongClickListener onLongClickDelete = new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -113,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
         buttonDelete.getId();
         buttonDelete.setOnLongClickListener(onLongClickDelete);
 
-        //Кнопка запятая
         OnClickListener onClickComma = new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
         buttonComma.getId();
         buttonComma.setOnClickListener(onClickComma);
 
-        //Кнопка ±
         OnClickListener onClickPlusMinus = new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -164,7 +160,6 @@ public class MainActivity extends AppCompatActivity {
         buttonPlusMinus.getId();
         buttonPlusMinus.setOnClickListener(onClickPlusMinus);
 
-        //Кнопка (
         OnClickListener onClickBkt1 = new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -181,7 +176,6 @@ public class MainActivity extends AppCompatActivity {
         buttonBkt1.getId();
         buttonBkt1.setOnClickListener(onClickBkt1);
 
-        //Кнопка )
         OnClickListener onClickBkt2 = new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -199,14 +193,12 @@ public class MainActivity extends AppCompatActivity {
         buttonBkt2.getId();
         buttonBkt2.setOnClickListener(onClickBkt2);
 
-        //Кнопка равенства
         OnClickListener onClickEquality = new OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (textView2.getText().length() != 0) {
                     if (!result) textView2.setText(textView2.getText() + "" + textView.getText());
                     try {
-                        //Проверка на закрытость скобок
                         String resultString = textView2.getText().toString();
                         int countBtkOpen = 0, countBtkClose = 0, difference;
                         for (char element : resultString.toCharArray()){
@@ -214,18 +206,7 @@ public class MainActivity extends AppCompatActivity {
                             if (element == ')') countBtkClose++;
                         }
 
-                        //Изменение строки, если количество открытых скобок не равно количеству закрытых
-                        difference = countBtkOpen-countBtkClose;
-                        if (difference > 0) {
-                            for (int i = 0; i < difference; i++) {
-                                textView2.setText(textView2.getText() + ")");
-                            }
-                        }
-                        if (difference < 0) {
-                            for (int i = 0; i > difference; i--) {
-                                textView2.setText("(" + textView2.getText());
-                            }
-                        }
+                        //dd on ss code not available - - - - -
                         textView2.setText(correctString(textView2.getText().toString()));
                         if (checkLast(getString(R.string.button_Plus)) || checkLast(getString(R.string.button_Minus)) || checkLast(getString(R.string.button_Multiply)) || checkLast(getString(R.string.button_Devide))) {
                             textView2.setText(textView2.getText().toString().substring(0,  textView2.getText().length() - 1));
@@ -242,7 +223,6 @@ public class MainActivity extends AppCompatActivity {
                     buttonAClicked = false;
                     power = false;
 
-                    // Если большое число , то ставим в конец букву E
                     if (textView.getText().length() > 13) {
                         int count = 0;
                         if (textView.getText().toString().contains(".")) {
@@ -280,7 +260,6 @@ public class MainActivity extends AppCompatActivity {
         buttonEquality.getId();
         buttonEquality.setOnClickListener(onClickEquality);
 
-        //Кнопка %
         OnClickListener onClickPercent = new OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
@@ -326,7 +305,6 @@ public class MainActivity extends AppCompatActivity {
         buttonPercent.getId();
         buttonPercent.setOnClickListener(onClickPercent);
 
-        // Кнопка C
         OnClickListener onClickClear = new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -336,7 +314,6 @@ public class MainActivity extends AppCompatActivity {
         buttonClear.getId();
         buttonClear.setOnClickListener(onClickClear);
 
-        // Кнопка Pi
         OnClickListener onClickPi = new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -347,7 +324,6 @@ public class MainActivity extends AppCompatActivity {
         buttonPi.getId();
         buttonPi.setOnClickListener(onClickPi);
 
-        // Кнопка E
         OnClickListener onClickE = new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -358,7 +334,6 @@ public class MainActivity extends AppCompatActivity {
         buttonE.getId();
         buttonE.setOnClickListener(onClickE);
 
-        //Кнопка ^
         OnClickListener onClickPower = new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -391,7 +366,6 @@ public class MainActivity extends AppCompatActivity {
         buttonPower.setOnClickListener(onClickPower);
     }
 
-    //Функциональные кнопки калькулятора
     public void clickButtonF (final Button button, final String string) {
         OnClickListener onClickFunction = new OnClickListener() {
             @Override
@@ -414,8 +388,6 @@ public class MainActivity extends AppCompatActivity {
         button.getId();
         button.setOnClickListener(onClickFunction);
     }
-
-    //Удаление последнего символа в TextView
     public void deleteSymbol(TextView tV) {
         StringBuilder stringBuffer = new StringBuilder(tV.getText().toString());
         if (stringBuffer.length() != 0) {
@@ -425,7 +397,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //Удаление из верхнего поля
     public void deleteFromTopView() {
         if (textView2.getText().length() != 0) {
             if (checkLast("(")){
@@ -459,7 +430,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Очистка нижнего поля от лишних нулей и точек
     public void clearValue (){
         if (textView.getText().equals("-")) textView.setText("");
         if (textView.getText().toString().contains(".")) {
@@ -481,47 +451,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //Текстовое уведомление
     public void showToast(String message) {
-        //создаем и отображаем текстовое уведомление
         Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP, 0, 80);
         toast.show();
     }
-
-    //Исправление строки
+    //test is failed
+    //Return to previous version
     public String correctString (String string){
 
-        string = string.replace("--", "+");
-        string = string.replace("+-", "-");
 
-        string = string.replace("(+", "(");
-        string = string.replace("(×", "(");
-        string = string.replace("(÷", "(");
-
-        string = string.replace("+)", ")");
-        string = string.replace("-)", ")");
-        string = string.replace("×)", ")");
-        string = string.replace("÷)", ")");
-
-        string = string.replace("()", "(0)");
-        string = string.replace(")(", ")×(");
-
-        String[] func = {"c", "s", "t", "l"};
-        for (int i = 0; i <10; i++){
-            string = string.replace(i + "(", i + "×(" );
-            string = string.replace(")" + i, ")×" + i );
-        }
-        for (int f = 0; f <4; f++){
-            string = string.replace(")" + func[f], ")×" + func[f]);
-            for (int i = 0; i <10; i++){
-                string = string.replace(i + "" + func[f], i + "×" + func[f]);
-            }
-        }
         return string;
     }
 
-    //Очистка результата
     public void deleteResult () {
             textView.setText("");
             textView2.setText("");
@@ -534,7 +476,6 @@ public class MainActivity extends AppCompatActivity {
             buttonPercent.setEnabled(true);
     }
 
-    //Кнопки 0..9
     public void onClickButtonNumber(View view) {
         if (result) {
             deleteResult();
@@ -555,7 +496,6 @@ public class MainActivity extends AppCompatActivity {
         power = false;
     }
 
-    //Кнопки +, -, *, /
     public void onClickButtonAction(View view) {
         clearValue();
         if (textView2.getText().length() != 0 || textView.getText().length() != 0) {
@@ -604,7 +544,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //Скрол в конец строки
     public void scroller (final HorizontalScrollView horizontalScroll){
         horizontalScroll.postDelayed(new Runnable() {
             @Override
@@ -614,7 +553,6 @@ public class MainActivity extends AppCompatActivity {
         }, 100L);
     }
 
-    //Восстановление Activity после поворота экрана
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         textView.setText(savedInstanceState.getString("textView"));
@@ -628,7 +566,6 @@ public class MainActivity extends AppCompatActivity {
         funcCounter = savedInstanceState.getInt("funcCounter");
     }
 
-    //Сохранение Activity при повороте экрана
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString("textView", textView.getText().toString());
@@ -642,7 +579,6 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt("funcCounter", funcCounter);
     }
 
-    //Проверка последнего символа
     public boolean checkLast (String symbol) {
         int l = textView2.getText().length();
         if (textView2.getText().length() != 0) {
